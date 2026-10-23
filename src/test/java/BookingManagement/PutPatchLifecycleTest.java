@@ -52,7 +52,7 @@ public class PutPatchLifecycleTest  extends BaseTest {
                         "\"bookingdates\":{\"checkin\":\"2026-01-01\",\"checkout\":\"2027-01-01\"}," +
                         "\"additionalneeds\":\"lunch\"}")
                 .when()
-                .put("/booking/3292");
+                .put("/booking/1028");
         System.out.println(response.getBody().asString());
         assertEquals(response.getStatusCode(), StatusCode.SUCCESS.code);
         System.out.println("TestUpdateBooking executed successfully");
@@ -69,7 +69,7 @@ public class PutPatchLifecycleTest  extends BaseTest {
                 .spec(requestSpec)
 //                .header("Content-Type", "application/json")
                 .when()
-                .get("/booking/4");
+                .get("/booking/1028");
         System.out.println(response.getBody().asString());
         assertEquals(response.getStatusCode(), StatusCode.SUCCESS.code);
         System.out.println("ValidateUpdateBooking executed successfully");
