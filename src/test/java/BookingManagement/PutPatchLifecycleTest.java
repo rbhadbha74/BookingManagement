@@ -3,6 +3,7 @@ package BookingManagement;
 import core.BaseTest;
 import core.StatusCode;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
@@ -95,5 +96,52 @@ public class PutPatchLifecycleTest  extends BaseTest {
         assertEquals(updatedResponse.jsonPath().getString("booking.additionalneeds"),originalAdditionalNeeds);
 
         System.out.println("UpdateBookingWithFirstNameAndValidateUnchangedFields executed successfully");
+    }
+
+    @Test
+    public void validateNonExistentBooking() {
+        // Set base URI for the API
+//        RestAssured.baseURI = "https://restful-booker.herokuapp.com/";
+
+        // Authenticate and get an authorization token
+
+        ValidAuth auth = new ValidAuth();
+
+        String Token = auth.CreateAuthToken();
+
+        System.out.println(Token);
+
+        Response response = given()
+                .spec(requestSpec)
+                .cookie("", Token)
+//                .header("Content-Type", "application/json")
+//                .header("Accept","application/json")
+                .body("{\"firstname\":\"James\",\"lastname\":\"Brown\"}")
+                .when()
+                .patch("/booking/9999");
+        System.out.println(response.getBody().asString());
+        assertEquals(response.getStatusCode(), StatusCode.Forbidden.code);
+        System.out.println("ValidateNonExistentBooking executed successfully");
+    }
+
+    @Test()
+    public void ValidateDeleteBookingWithoutToken() {
+
+        // Authenticate and get an authorization token
+
+//        ValidAuth auth = new ValidAuth();
+//
+//        String Token = auth.CreateAuthToken();
+//
+//        System.out.println(Token);
+
+        Response response = given()
+                .spec(requestSpec)
+//                .cookie("token", Token)
+//                .header("Content-Type", "application/json")
+                .delete("/booking/4");
+        System.out.println(response.getBody().asString());
+        Assert.assertEquals(response.getStatusCode(), StatusCode.Forbidden.code);
+        System.out.println(" ValidateDeleteBookingWithoutToken Executed Successfully");
     }
 }

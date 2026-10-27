@@ -38,7 +38,7 @@ public class AuthenticationTests extends BaseTest {
 
         Response response = given()
                 .spec(requestSpec)
-//                .cookie("token", "")
+                .cookie("token", "")
 //                .header("Content-Type", "application/json")
                 .body("{\"firstname\":\"James\",\"lastname\":\"Brown\",\"totalprice\":111,\"depositpaid\":true," +
                         "\"bookingdates\":{\"checkin\":\"2018-01-01\",\"checkout\":\"2019-01-01\"}," +
@@ -89,4 +89,5 @@ public class AuthenticationTests extends BaseTest {
         assertEquals(response.jsonPath().getString("reason"), "Bad credentials");
         assertNull(response.jsonPath().getString("token"));
     }
+
 }
