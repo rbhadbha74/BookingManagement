@@ -3,6 +3,7 @@ package BookingManagement;
 import core.StatusCode;
 import core.BaseTest;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.RestAssuredWrapper;
 
@@ -14,12 +15,10 @@ public class AuthenticationTests extends BaseTest {
 
     @Test
     public void ValidateInvalidAccessToken() {
-        // Set base URI for the API
-//        RestAssured.baseURI = "https://restful-booker.herokuapp.com/";
 
         Response response = given()
                 .spec(requestSpec)
-//                .cookie("token", "32ab561b67bc3c1")
+                .cookie("token", "32ab561b67bc3c1")
 //                .header("Content-Type", "application/json")
                 .body("{\"firstname\":\"James\",\"lastname\":\"Brown\",\"totalprice\":111,\"depositpaid\":true," +
                         "\"bookingdates\":{\"checkin\":\"2018-01-01\",\"checkout\":\"2019-01-01\"}," +
@@ -90,4 +89,17 @@ public class AuthenticationTests extends BaseTest {
         assertNull(response.jsonPath().getString("token"));
     }
 
+    @Test
+    public void verifyGetToAuthTest() {
+
+        Response response = given()
+                .contentType("application/json")
+                .body("{\"username\":\"admin\",\"password\":\"password123\"}")
+                .when()
+                .get("/auth");
+        System.out.println(response.getBody().asString());
+        assertEquals(response.statusCode(), StatusCode.NOT_FOUND.code);
+        System.out.println("Verify GetToAuthTest executed successfully");
+
+    }
 }
