@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.testng.AssertJUnit.assertEquals;
 
-public class NegativeBookingTests extends BaseTest{
+public class NegativeBookingTests extends BaseTest {
 
     @Test
     public void validateInvalidBookingId() {
@@ -130,6 +130,25 @@ public class NegativeBookingTests extends BaseTest{
         System.out.println(response.getBody().asString());
         assertEquals(response.getStatusCode(), StatusCode.NOT_FOUND.code);
         System.out.println("ValidateInvalidEndpoint executed successfully");
+
+    }
+
+    @Test
+    public void validateMalformedJSONWhileCreatingBooking() {
+
+        String firstName = "Rakhee";
+        String lastName = "Bhadbhade";
+        String additionalNeeds = "breakfast";
+
+        Response response = given()
+                .spec(requestSpec)
+                .body("{\"firstname\":\"Rakhee\" \"lastname\":\"Bhadbhade\"}")
+                .when()
+                .post("/booking/");
+        assertEquals(response.getStatusCode(), StatusCode.BAD_REQUEST.code);
+        System.out.println(response.getBody().asString());
+        System.out.println("ValidateMalformedJSONWhileCreatingBooking executed successfully");
+
 
     }
 }
