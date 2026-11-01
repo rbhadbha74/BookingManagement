@@ -21,7 +21,7 @@
           <source>1.8</source>
           <target>1.8</target>
           <fork>true</fork>
-          <!--          <executable>/Library/Java/JavaVirtualMachines/jdk-11.0.10.jdk/Contents/Home/bin/javac</executable>-->
+          <!--<executable>/Library/Java/JavaVirtualMachines/jdk-11.0.10.jdk/Contents/Home/bin/javac</executable>-->
         </configuration>
       </plugin>
       <plugin>
@@ -53,6 +53,12 @@
       <artifactId>rest-assured</artifactId>
       <version>5.4.0</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-schema-validator</artifactId>
+      <version>5.3.0</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
