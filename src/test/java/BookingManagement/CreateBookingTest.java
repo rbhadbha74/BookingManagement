@@ -41,8 +41,8 @@ public class CreateBookingTest extends BaseTest{
 
         /* Verify that deposit paid is a boolean */
 
-        Object depositPath = response.jsonPath().getBoolean("booking.depositpaid");
-        assertEquals(depositPath,true);
+        Object depositPaid = response.jsonPath().getBoolean("booking.depositpaid");
+        assertEquals(depositPaid,true);
 
         /* Verify Checkin and Checkout dates*/
 
