@@ -14,15 +14,18 @@ import static io.restassured.RestAssured.given;
         @BeforeClass
         public void setUp() {
 
+            System.out.println("BaseTest setup started");
+
             RestAssured.baseURI =
                     "https://restful-booker.herokuapp.com";
 
             requestSpec = given()
                     .baseUri(RestAssured.baseURI)
-//                    .cookie("token", "")
-//                    .cookie("token", "32ab561b67bc3c1")
                     .contentType("application/json")
                     .accept("application/json");
+
+            System.out.println("RequestSpec initialized: " + requestSpec);
+
         }
     }
 

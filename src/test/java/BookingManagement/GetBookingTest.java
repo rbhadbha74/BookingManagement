@@ -15,10 +15,11 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class GetBookingTest extends BaseTest{
 
-    @Test
+    @Test(groups = {"smoke"})
     public void validateGetAllBookings() {
-        // Set base URI for the API
-//        RestAssured.baseURI = "https://restful-booker.herokuapp.com/";
+
+        System.out.println("========== Smoke test started ==========");
+        System.out.println("RequestSpec value: " + requestSpec);
 
         // Authenticate and get an authorization token
 

@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <included-static-names>
       <name>io.restassured.RestAssured.given</name>
+      <name>java.nio.file.Files.readString</name>
     </included-static-names>
   </component>
 </project>

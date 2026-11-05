@@ -1,5 +1,6 @@
 package BookingManagement;
 
+import Pojo.PatchBooking;
 import core.BaseTest;
 import Pojo.Booking;
 import core.StatusCode;
@@ -7,6 +8,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
+
+import javax.sound.midi.Patch;
 import java.io.IOException;
 import static io.restassured.RestAssured.given;
 import static org.testng.AssertJUnit.assertEquals;
@@ -25,9 +28,7 @@ public class DataDrivenTests extends BaseTest {
         postRequestDate.setCheckin("2018-01-01");
         postRequestDate.setCheckout("2019-01-01");
         postRequest.setAdditionalneeds("breakfast");
-
         postRequest.setBookingdates(postRequestDate);
-
         Response response = given()
                 .spec(requestSpec)
                 .body(postRequest)
@@ -110,27 +111,29 @@ public class DataDrivenTests extends BaseTest {
 
     @Test
     public void validatePatchWithResponsePojo() throws IOException {
-        // Set base URI for the API
-        RestAssured.baseURI = "https://reqres.in/api";
 
-        String job = "morpheus";
-
-        postRequest patchRequest = new postRequestBody();
-        patchRequest.setJob(job);
+        String firstname = "Ahaan";
 
         // Authenticate and get an authorization token
+
+        ValidAuth auth = new ValidAuth();
+
+        String Token = auth.CreateAuthToken();
+        PatchBooking patchRequest = new PatchBooking();
+        patchRequest.setFirstname(firstname);
         Response response = given()
-                .header("x-api-key", "reqres_ba038908290340539c12fe45b4aecdb4")
-                .header("Content-Type", "application/json")
+                .spec(requestSpec)
+                .cookie("token",Token)
                 .body(patchRequest)
                 .when()
-                .patch("/users/2");
-        postRequestBody responseBody = response.as(postRequestBody.class);
-        System.out.println(responseBody.getJob());
-        assertEquals(job, responseBody.getJob());
+                .patch("/booking/418");
         assertEquals(response.getStatusCode(), StatusCode.SUCCESS.code);
-        System.out.println("ValidatePatchWithResponsePojo executed successfully");
         System.out.println(response.getBody().asString());
+        Booking responseBody = response.as(Booking.class);
+        System.out.println(responseBody.getFirstname());
+        assertEquals(firstname, responseBody.getFirstname());
+        System.out.println("ValidatePatchWithResponsePojo executed successfully");
+
 
     }
 }
